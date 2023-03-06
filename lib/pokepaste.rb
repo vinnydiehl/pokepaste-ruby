@@ -40,7 +40,12 @@ module PokePaste
 
       # Pull the moves out
       pkmn.moves, paragraph = paragraph.partition { |line| line =~ /^\s*-/ }
-      pkmn.moves.map! { |line| line.sub /^\s*-\s*/, "" } if pkmn.moves.any?
+      if pkmn.moves.any?
+        pkmn.moves.map! do |line|
+          move_slot = line.sub /^\s*-\s*/, ""
+          move_slot.include?("/") ? move_slot.split(/\s*\/\s*/) : move_slot
+        end
+      end
 
       # Pull the nature out. If there are multiple, the first is used
       nature_line, paragraph = paragraph.partition { |line| line =~ /nature\s*$/i }

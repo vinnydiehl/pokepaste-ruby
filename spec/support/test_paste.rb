@@ -39,7 +39,7 @@ TEST_PASTE = <<~EOS
   - Dazzling Gleam
   - Flash Cannon
   - Mortal Spin
-  - Power Gem
+  - Power Gem / Protect
 EOS
 
 # Identical to TEST_PASTE, uploaded to pokepast.es:
@@ -121,6 +121,6 @@ TEST_DATA = [
     level: 50,
     happiness: 255,
     nature: :naive,
-    moves: ["Dazzling Gleam", "Flash Cannon", "Mortal Spin", "Power Gem"]
+    moves: ["Dazzling Gleam", "Flash Cannon", "Mortal Spin", ["Power Gem", "Protect"]]
   }
 ]
