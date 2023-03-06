@@ -7,7 +7,7 @@ describe PokePaste do
     TEST_DATA.each_with_index do |attrs, i|
       attrs.each do |attr, value|
         it "processes :#{attr}#{attr == :shiny ? '?' : ''} correctly" do
-          attr = (attr.to_s + "?").to_sym if attr = :shiny
+          attr = (attr.to_s + "?").to_sym if attr == :shiny
           expect(paste[i].send attr).to eq value
         end
       end

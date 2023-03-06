@@ -96,6 +96,7 @@ team << PokePaste::Pokemon.new(
   species: "Bulbasaur",
   nickname: "Bud",
   ivs: {atk: 0},
+  shiny: true,
   moves: %w[Tackle Growl]
 )
 

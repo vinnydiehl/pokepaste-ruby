@@ -16,5 +16,13 @@ module PokePaste
 
     def to_s
     end
+
+    def <<(pkmn)
+      if pkmn.is_a? PokePaste::Pokemon
+        @team << pkmn
+      else
+        raise TypeError, "invalid type, PokePaste::Pokemon expected"
+      end
+    end
   end
 end

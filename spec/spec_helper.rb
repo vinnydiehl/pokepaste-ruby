@@ -4,6 +4,10 @@ require "pokepaste"
 Dir[File.expand_path("../support/**/*.rb", __FILE__)].each { |f| require f }
 
 RSpec.configure do |config|
+  # Add `focus: true` hash parameter to a describe/context/it block
+  # to only run the specs in that block
+  config.filter_run_when_matching :focus
+
   # Fuubar
   config.add_formatter "Fuubar"
   config.fuubar_progress_bar_options = { format: "  %c/%C |%b>%i|%e " }
