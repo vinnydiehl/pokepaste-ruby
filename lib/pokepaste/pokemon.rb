@@ -3,6 +3,12 @@ module PokePaste
     attr_accessor *%i[species nickname gender item evs ivs shiny
                       ability tera_type level happiness nature moves]
 
+    @gender_abbrs = {m: :male, f: :female}
+
+    class << self
+      attr_accessor :gender_abbrs
+    end
+
     def initialize(**attrs)
       unless attrs[:species]
         raise ArgumentError, "species required to initialize a PokePaste::Pokemon"
@@ -56,15 +62,14 @@ module PokePaste
       attrs.each { |key, value| send "#{key}=", value }
 
       # Both first letter and full word, string and symbol are supported for gender
-      genders = {m: :male, f: :female}
       if attrs[:gender]
         gender = attrs[:gender].downcase.to_sym
-        if genders.flatten.include?(gender)
+        if self.class.gender_abbrs.flatten.include?(gender)
           # Either it's the key, or the value; this will find the value either way
-          @gender = genders[gender] || gender
+          @gender = self.class.gender_abbrs[gender] || gender
         else
           raise TypeError,
-            "expected nil or one of #{genders.flatten} for :gender, received #{attrs[:gender]}"
+            "expected nil or one of #{self.class.gender_abbrs.flatten} for :gender, received #{attrs[:gender]}"
         end
       end
 
