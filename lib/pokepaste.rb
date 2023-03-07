@@ -1,5 +1,5 @@
-require "pokepaste/paste"
 require "pokepaste/pokemon"
+require "pokepaste/team"
 
 require "open-uri"
 
