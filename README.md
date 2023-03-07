@@ -3,14 +3,6 @@
 Ruby parser for [PokéPaste](https://pokepast.es/syntax.html), the format used
 by Pokémon Showdown and various teambuilders.
 
-## Under Construction!
-
-The outline given below is the intended behavior of the library for version
-0.1. Tests for this behavior are implemented in
-[`spec/`](https://github.com/vinnydiehl/pokepaste-ruby/tree/develop/spec); if
-you have stumbled upon this library already and are interested in helping, run
-the tests to see where we're at.
-
 ## Installation
 
 Install with [RubyGems](https://rubygems.org/gems/pokepaste):

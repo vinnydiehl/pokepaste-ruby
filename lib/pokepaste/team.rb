@@ -15,6 +15,7 @@ module PokePaste
     end
 
     def to_s
+      map(&:to_s).join("\n\n")
     end
 
     def <<(pkmn)

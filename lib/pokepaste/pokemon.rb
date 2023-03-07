@@ -4,7 +4,6 @@ module PokePaste
                       ability tera_type level happiness nature moves]
 
     @gender_abbrs = {m: :male, f: :female}
-
     class << self
       attr_accessor :gender_abbrs
     end
@@ -90,10 +89,48 @@ module PokePaste
     end
 
     def to_s
+      # Build first line
+      str = @nickname ? "#{@nickname} (#{@species})" : @species.dup
+      str << " (#{@gender.to_s[0].upcase})" if @gender
+      str << " @ #{@item}" if @item
+
+      str << "\nAbility: #{@ability}" if @ability
+      str << "\nLevel: #{@level}" if @level != 50
+      str << "\nShiny: Yes" if @shiny
+      str << "\nTera Type: #{@tera_type.to_s.capitalize}" if @tera_type
+      str << "\nEVs: #{stat_string @evs, 0}" if @evs.any? { |_, value| value != 0 }
+      # Don't print neutral natures
+      unless %i[hardy docile serious bashful quirky].include? @nature
+        str << "\n#{@nature.to_s.capitalize} Nature"
+      end
+      str << "\nIVs: #{stat_string @ivs, 31}" if @ivs.any? { |_, value| value != 31 }
+      str << "\nHappiness: #{@happiness}" if @happiness != 255
+
+      @moves.each do |move|
+        str << "\n- #{move.is_a?(Array) ? move.join(" / ") : move}"
+      end
+
+      str
     end
 
     def shiny?
       @shiny
+    end
+
+    private
+
+    @@stat_inflections = {
+      hp: "HP",
+      atk: "Atk",
+      def: "Def",
+      spa: "SpA",
+      spd: "SpD",
+      spe: "Spe"
+    }
+
+    def stat_string(stats, default)
+      stats.select { |_, value| value != default}
+              .map { |stat, value| "#{value} #{@@stat_inflections[stat]}" }.join(' / ')
     end
   end
 end

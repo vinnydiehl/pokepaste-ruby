@@ -1,7 +1,7 @@
 # These aren't intended to be realistic or legal setups; this is merely to
 # broadly test the features of the parser.
 
-TEST_PASTE = <<~EOS
+TEST_PASTE = <<~EOS.strip
   Mr. Mime-Galar (M) @ Heavy-Duty Boots
   Ability: Vital Spirit
   Modest Nature
