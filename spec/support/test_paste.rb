@@ -43,8 +43,8 @@ TEST_PASTE = <<~EOS
 EOS
 
 # Identical to TEST_PASTE, uploaded to pokepast.es:
-TEST_PASTE_URL = "https://pokepast.es/3f8fd09233183a98"
-TEST_PASTE_ID = "3f8fd09233183a98"
+TEST_PASTE_URL = "https://pokepast.es/a979ce56c2109382"
+TEST_PASTE_ID = "a979ce56c2109382"
 
 # This paste is expected to be parsed into this data:
 TEST_DATA = [

@@ -25,20 +25,32 @@ describe PokePaste do
       test_paste_equality paste, fetch
     end
 
+    it "works with a path" do
+      fetch = PokePaste::fetch "/#{TEST_PASTE_ID}"
+
+      test_paste_equality paste, fetch
+    end
+
     it "works with an ID" do
       fetch = PokePaste::fetch TEST_PASTE_ID
 
       test_paste_equality paste, fetch
     end
 
-    it "fails with an invalid input" do
+    it "fails with an invalid host or no path" do
       ["https://google.com/",
-       "https://pokepast.es/nobodyhome",
        "https://pokepast.es",
+       "http://localhost/test"].each do |input|
+        expect { PokePaste::fetch input }.to raise_error ArgumentError
+      end
+    end
+
+    it "fails with an invalid input" do
+      ["https://pokepast.es/nobodyhome",
        "somerandomtext",
        "https://pokepast.es/syntax.html",
        "syntax.html"].each do |input|
-        expect { PokePaste::fetch input }.to raise_error Net::HTTPNotFound
+        expect { PokePaste::fetch input }.to raise_error OpenURI::HTTPError
       end
     end
   end

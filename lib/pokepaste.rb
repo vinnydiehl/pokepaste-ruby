@@ -1,10 +1,12 @@
 require "pokepaste/paste"
 require "pokepaste/pokemon"
 
+require "open-uri"
+
 module PokePaste
   def self.parse(paste)
     # Each paragraph is a Pokémon (separated by 1 or more blank lines)
-    paragraphs = paste.split(/\n\s*\n/).map { |p| p.split("\n").map &:strip }
+    paragraphs = paste.strip.split(/\n\s*\n/).map { |p| p.split("\n").map &:strip }
 
     team = PokePaste::Team.new
 
@@ -86,5 +88,25 @@ module PokePaste
   end
 
   def self.fetch(str)
+    input_url = URI.parse(str)
+    unless [nil, "pokepast.es"].include? input_url.host
+      raise ArgumentError, "invalid URL; must be valid pokepast.es URL or path, received '#{str}'"
+    end
+
+    path = (input_url.host ? input_url.path : str).gsub /^\//, ""
+    if path.empty?
+      raise ArgumentError, "invalid URL; no paste ID found in '#{str}'"
+    end
+
+    # The paste is in <article> tags
+    paste_content = URI.open("https://pokepast.es/#{path}").read.
+                        slice(/(?<=\<article\>)[\S\s]*(?=\<\/article\>)/)
+
+    unless paste_content
+      raise OpenURI::HTTPError.new "no paste found at '#{str}'", 404
+    end
+
+    # Removing all HTML tags is sufficient to pass the string to the parser
+    parse paste_content.gsub(/\<\/?[^\>]+\>/, "")
   end
 end
